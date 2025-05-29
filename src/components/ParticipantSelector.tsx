@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Sparkles, Filter, UserCheck, Mail, MapPin, Briefcase, Star, Clock } from 'lucide-react';
-import type { Study, Participant, FilterCriteria } from '../types/study';
+import type { Study, Participant } from '../types/study';
 
 interface ParticipantSelectorProps {
   study: Partial<Study>;
@@ -69,8 +69,9 @@ export const ParticipantSelector: React.FC<ParticipantSelectorProps> = ({
   const navigate = useNavigate();
   const [selectedParticipants, setSelectedParticipants] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [filteredParticipants, setFilteredParticipants] = useState<Participant[]>(mockParticipants);
   const [aiSuggested, setAiSuggested] = useState<string[]>([]);
+
+  const filteredParticipants = mockParticipants;
 
   useEffect(() => {
     // Simulate AI suggestions based on the study prompt

@@ -252,10 +252,6 @@ function App() {
     setCurrentStudy(null);
   };
 
-  const resetStudy = () => {
-    setCurrentStudy(null);
-  };
-
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
@@ -265,7 +261,7 @@ function App() {
           <Routes>
             <Route 
               path="/" 
-              element={<Dashboard studies={studies} onStudyTypeSelect={handleStudyTypeSelect} />} 
+              element={<Dashboard studies={studies} />} 
             />
             <Route 
               path="/analytics" 

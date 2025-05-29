@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Search, Filter, Users, Star, MapPin, Briefcase, GraduationCap, Calendar, CheckSquare, Square, Eye, Mail, Phone, ArrowLeft, Plus } from 'lucide-react';
+import { Search, Filter, Plus, Eye, Mail, MapPin, Users, Calendar, Star, Briefcase, ArrowLeft, CheckSquare, Square } from 'lucide-react';
 import type { Participant } from '../types/study';
 
 interface ParticipantsProps {

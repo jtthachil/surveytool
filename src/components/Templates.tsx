@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Filter, Plus, Copy, Edit, Star, Users, Clock, BarChart3, Eye, Heart, Briefcase, Smartphone, ShoppingCart, Gamepad2, FileText, X } from 'lucide-react';
+import { Search, Plus, Star, Eye, BarChart3, Users, Clock, FileText, X } from 'lucide-react';
 
 interface Template {
   id: string;

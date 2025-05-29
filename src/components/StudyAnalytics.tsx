@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, BarChart3, TrendingUp, Users, Clock, Target, Download, Calendar, MapPin, Briefcase } from 'lucide-react';
+import { ArrowLeft, BarChart3, TrendingUp, Users, Target, Download, Clock, MapPin } from 'lucide-react';
 import type { Study } from '../types/study';
 
 interface StudyAnalyticsProps {
@@ -89,7 +89,7 @@ export const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ studies }) => {
   const TimeSpentChart = () => (
     <div className="h-64 p-4">
       <div className="space-y-4">
-        {analytics.timeSpentBySection.map((section, index) => (
+        {analytics.timeSpentBySection.map((section) => (
           <div key={section.section} className="flex items-center">
             <div className="w-24 text-sm text-gray-600 truncate">{section.section}</div>
             <div className="flex-1 mx-4">
@@ -263,7 +263,7 @@ export const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ studies }) => {
             {Object.entries(analytics.demographicsBreakdown.location)
               .sort(([,a], [,b]) => b - a)
               .slice(0, 5)
-              .map(([city, count], index) => (
+              .map(([city, count]) => (
                 <div key={city} className="flex items-center justify-between">
                   <div className="flex items-center">
                     <MapPin size={14} className="text-gray-400 mr-2" />

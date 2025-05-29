@@ -5,10 +5,9 @@ import type { Study, StudyType } from '../types/study';
 
 interface DashboardProps {
   studies: Study[];
-  onStudyTypeSelect?: (type: StudyType, prompt: string) => void;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ studies, onStudyTypeSelect }) => {
+export const Dashboard: React.FC<DashboardProps> = ({ studies }) => {
   const navigate = useNavigate();
 
   const getStatusColor = (status: string) => {

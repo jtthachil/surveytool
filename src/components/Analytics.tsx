@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BarChart3, TrendingUp, Users, Eye, Clock, Filter, Download, Calendar, ArrowRight, PieChart } from 'lucide-react';
+import { BarChart3, TrendingUp, Users, Clock, Filter, Download, ArrowRight } from 'lucide-react';
 import type { Study } from '../types/study';
 
 interface AnalyticsProps {
@@ -57,7 +57,7 @@ export const Analytics: React.FC<AnalyticsProps> = ({ studies }) => {
   const ResponseTrendsChart = () => (
     <div className="h-64 p-4">
       <div className="flex items-end space-x-4 h-full">
-        {chartData.responseTrends.map((data, index) => (
+        {chartData.responseTrends.map((data) => (
           <div key={data.month} className="flex-1 flex flex-col items-center">
             <div 
               className="bg-blue-500 rounded-t w-full transition-all duration-300 hover:bg-blue-600"
@@ -80,7 +80,7 @@ export const Analytics: React.FC<AnalyticsProps> = ({ studies }) => {
         <div className="relative">
           <svg width="200" height="200" viewBox="0 0 200 200">
             <circle cx="100" cy="100" r="80" fill="none" stroke="#f3f4f6" strokeWidth="20" />
-            {chartData.studyTypes.map((item, index) => {
+            {chartData.studyTypes.map((item) => {
               const percentage = (item.count / total) * 100;
               const strokeDasharray = (percentage / 100) * (2 * Math.PI * 80);
               const strokeDashoffset = -cumulativePercentage * (2 * Math.PI * 80) / 100;

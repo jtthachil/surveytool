@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Filter, BarChart3, Users, Clock, CheckCircle, AlertCircle, Play, Eye, Calendar, Plus } from 'lucide-react';
+import { Search, BarChart3, Users, Eye, Calendar, Clock, Play, CheckCircle, AlertCircle, Plus } from 'lucide-react';
 import type { Study } from '../types/study';
 
 interface AllStudiesProps {

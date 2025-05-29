@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, BarChart3, Users, Eye, Sparkles, FileText, Calendar, Clock } from 'lucide-react';
+import { ArrowLeft, BarChart3, Users, Eye, Sparkles, FileText, Clock } from 'lucide-react';
 import type { StudyType } from '../types/study';
 
 interface StudyCreatorProps {

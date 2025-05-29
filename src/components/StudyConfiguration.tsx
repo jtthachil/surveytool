@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, MessageSquare, Brain, Link, DollarSign, Clock, Users, Plus, Trash2 } from 'lucide-react';
+import { ArrowLeft, DollarSign, Users, MessageSquare, Brain, Link, Plus, Trash2 } from 'lucide-react';
 import type { Study, StudyConfiguration as StudyConfig, ScreenerQuestion } from '../types/study';
 
 interface StudyConfigurationProps {
