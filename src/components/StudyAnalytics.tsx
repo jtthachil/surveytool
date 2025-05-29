@@ -71,17 +71,24 @@ export const StudyAnalytics: React.FC<StudyAnalyticsProps> = ({ studies }) => {
 
   const ResponsesByDayChart = () => (
     <div className="h-64 p-4">
-      <div className="flex items-end space-x-2 h-full">
-        {analytics.responsesByDay.map((data) => (
-          <div key={data.day} className="flex-1 flex flex-col items-center">
-            <div 
-              className="bg-blue-500 rounded-t w-full transition-all duration-300 hover:bg-blue-600"
-              style={{ height: `${(data.responses / 25) * 100}%` }}
-            ></div>
-            <div className="text-xs text-gray-600 mt-2 font-medium">{data.day}</div>
-            <div className="text-xs text-gray-500">{data.responses}</div>
-          </div>
-        ))}
+      <div className="flex items-end justify-between h-full space-x-2">
+        {analytics.responsesByDay.map((data) => {
+          const maxValue = Math.max(...analytics.responsesByDay.map(d => d.responses));
+          const height = Math.max((data.responses / maxValue) * 80, 8); // Minimum 8% height
+          
+          return (
+            <div key={data.day} className="flex-1 flex flex-col items-center justify-end h-full">
+              <div className="w-full flex flex-col items-center justify-end" style={{ height: '200px' }}>
+                <div 
+                  className="bg-blue-500 rounded-t w-full transition-all duration-300 hover:bg-blue-600 min-h-2"
+                  style={{ height: `${height}%` }}
+                ></div>
+              </div>
+              <div className="text-xs text-gray-600 mt-2 font-medium">{data.day}</div>
+              <div className="text-xs text-gray-500">{data.responses}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
