@@ -14,7 +14,6 @@ import {
   AlertCircle,
   Pause,
   Eye,
-  CreditCard,
   BarChart3,
   RefreshCw,
   FileText,

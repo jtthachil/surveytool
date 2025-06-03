@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Pause, Square, Play, CheckCircle, AlertTriangle } from 'lucide-react';
 
 interface SurveyManagementProps {
-  currentStatus: 'draft' | 'live' | 'paused' | 'ended';
+  currentStatus: 'draft' | 'live' | 'paused' | 'ended' | 'pending-review';
   totalInvites: number;
   completed: number;
   pending: number;
@@ -62,7 +62,7 @@ export const SurveyManagement: React.FC<SurveyManagementProps> = ({
   const StatusBadge = () => {
     const statusConfig = {
       live: { color: 'bg-green-100 text-green-800', label: 'Live' },
-      pending: { color: 'bg-yellow-100 text-yellow-800', label: 'Under Review' },
+      'pending-review': { color: 'bg-yellow-100 text-yellow-800', label: 'Under Review' },
       paused: { color: 'bg-orange-100 text-orange-800', label: 'Paused' },
       ended: { color: 'bg-gray-100 text-gray-800', label: 'Completed' },
       draft: { color: 'bg-gray-100 text-gray-800', label: 'Draft' }
@@ -75,14 +75,6 @@ export const SurveyManagement: React.FC<SurveyManagementProps> = ({
         {config.label}
       </span>
     );
-  };
-
-  const statusColors = {
-    live: { color: 'bg-green-100 text-green-800', label: 'Live' },
-    pending: { color: 'bg-yellow-100 text-yellow-800', label: 'Under Review' },
-    paused: { color: 'bg-orange-100 text-orange-800', label: 'Paused' },
-    ended: { color: 'bg-gray-100 text-gray-800', label: 'Completed' },
-    draft: { color: 'bg-gray-100 text-gray-800', label: 'Draft' }
   };
 
   return (
@@ -213,7 +205,7 @@ export const SurveyManagement: React.FC<SurveyManagementProps> = ({
             </div>
           )}
 
-          {currentStatus === 'pending' && (
+          {currentStatus === 'pending-review' && (
             <div>
               <h3 className="font-semibold text-gray-900 mb-2">Approve survey and make it live</h3>
               <p className="text-sm text-gray-600 mb-3">This action is irreversible.</p>

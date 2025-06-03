@@ -822,11 +822,13 @@ export const StudyDetail: React.FC<StudyDetailProps> = ({ studies }) => {
             <div className="card">
               <h3 className="font-semibold text-gray-900 mb-4">Survey Management</h3>
               <SurveyManagement
-                currentStatus={
-                  study.status === 'pending-review' ? 'draft' : 
-                  study.status === 'completed' ? 'ended' : 
-                  study.status as 'draft' | 'live' | 'paused' | 'ended'
-                }
+                currentStatus={(() => {
+                  if (study.status === 'pending-review') return 'pending-review';
+                  if (study.status === 'live') return 'live';
+                  if (study.status === 'paused') return 'paused';
+                  if (study.status === 'completed') return 'ended';
+                  return 'draft';
+                })() as 'draft' | 'live' | 'paused' | 'ended' | 'pending-review'}
                 totalInvites={study.participants.length}
                 completed={0}
                 pending={study.participants.length}
