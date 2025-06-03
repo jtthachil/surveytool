@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Search, Bell, User, Plus, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { Search, Bell, User, Plus, CheckCircle, Clock, AlertCircle, BarChart3, Users, FileText, Settings, Wallet } from 'lucide-react';
 
 const mockNotifications = [
   {
@@ -44,60 +44,56 @@ export const Header: React.FC = () => {
     }
   };
 
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+
   return (
     <header className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo and Navigation */}
           <div className="flex items-center space-x-8">
-            <button 
-              onClick={() => navigate('/')}
-              className="text-xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
-            >
+            <Link to="/" className="text-xl font-bold text-blue-600 hover:text-blue-700 transition-colors">
               Research Platform
-            </button>
+            </Link>
             
             <nav className="hidden md:flex items-center space-x-2">
-              <button 
-                onClick={() => navigate('/')}
-                className={
-                  location.pathname === '/' 
-                    ? 'header-nav-link-active' 
-                    : 'header-nav-link'
-                }
+              <Link 
+                to="/" 
+                className={`header-nav-link ${isActive('/') ? 'header-nav-link-active' : ''}`}
               >
-                Dashboard
-              </button>
-              <button 
-                onClick={() => navigate('/analytics')}
-                className={
-                  location.pathname === '/analytics' 
-                    ? 'header-nav-link-active' 
-                    : 'header-nav-link'
-                }
+                <BarChart3 size={16} />
+                <span>Dashboard</span>
+              </Link>
+              <Link 
+                to="/analytics" 
+                className={`header-nav-link ${isActive('/analytics') ? 'header-nav-link-active' : ''}`}
               >
-                Analytics
-              </button>
-              <button 
-                onClick={() => navigate('/participants')}
-                className={
-                  location.pathname === '/participants' 
-                    ? 'header-nav-link-active' 
-                    : 'header-nav-link'
-                }
+                <BarChart3 size={16} />
+                <span>Analytics</span>
+              </Link>
+              <Link 
+                to="/participants" 
+                className={`header-nav-link ${isActive('/participants') ? 'header-nav-link-active' : ''}`}
               >
-                Participants
-              </button>
-              <button 
-                onClick={() => navigate('/templates')}
-                className={
-                  location.pathname === '/templates' 
-                    ? 'header-nav-link-active' 
-                    : 'header-nav-link'
-                }
+                <Users size={16} />
+                <span>Participants</span>
+              </Link>
+              <Link 
+                to="/wallet-dashboard" 
+                className={`header-nav-link ${isActive('/wallet-dashboard') ? 'header-nav-link-active' : ''}`}
               >
-                Templates
-              </button>
+                <Wallet size={16} />
+                <span>Payments</span>
+              </Link>
+              <Link 
+                to="/templates" 
+                className={`header-nav-link ${isActive('/templates') ? 'header-nav-link-active' : ''}`}
+              >
+                <FileText size={16} />
+                <span>Templates</span>
+              </Link>
             </nav>
           </div>
 

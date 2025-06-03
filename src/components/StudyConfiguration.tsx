@@ -170,28 +170,60 @@ Research Team"
         </div>
 
         <div className="space-y-4">
-          <div className="flex items-center space-x-4">
-            <label className="flex items-center">
-              <input
-                type="radio"
-                checked={useAIScreener}
-                onChange={() => setUseAIScreener(true)}
-                className="mr-2"
-              />
-              <span className="text-sm">Let AI create screener questions from your custom message</span>
-            </label>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+            <div className="flex items-start space-x-3">
+              <Brain className="text-blue-600 mt-1" size={20} />
+              <div>
+                <h4 className="text-sm font-medium text-blue-900 mb-2">Recommended: Create a Screener</h4>
+                <p className="text-sm text-blue-700 mb-3">
+                  Adding a screener helps ensure you get the right participants and improves data quality. 
+                  It's especially important for studies with specific requirements.
+                </p>
+                <button
+                  onClick={() => navigate('/screener-creator')}
+                  className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors"
+                >
+                  <Plus size={16} className="mr-2" />
+                  Create Advanced Screener
+                </button>
+              </div>
+            </div>
           </div>
-          
-          <div className="flex items-center space-x-4">
-            <label className="flex items-center">
-              <input
-                type="radio"
-                checked={!useAIScreener}
-                onChange={() => setUseAIScreener(false)}
-                className="mr-2"
-              />
-              <span className="text-sm">Create custom screener questions</span>
-            </label>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="border border-gray-200 rounded-lg p-4">
+              <label className="flex items-start cursor-pointer">
+                <input
+                  type="radio"
+                  checked={useAIScreener}
+                  onChange={() => setUseAIScreener(true)}
+                  className="mt-1 mr-3"
+                />
+                <div>
+                  <span className="text-sm font-medium text-gray-900">AI Generated Questions</span>
+                  <p className="text-xs text-gray-600 mt-1">
+                    Let AI create screener questions from your custom message above
+                  </p>
+                </div>
+              </label>
+            </div>
+            
+            <div className="border border-gray-200 rounded-lg p-4">
+              <label className="flex items-start cursor-pointer">
+                <input
+                  type="radio"
+                  checked={!useAIScreener}
+                  onChange={() => setUseAIScreener(false)}
+                  className="mt-1 mr-3"
+                />
+                <div>
+                  <span className="text-sm font-medium text-gray-900">Custom Questions</span>
+                  <p className="text-xs text-gray-600 mt-1">
+                    Create custom screener questions manually
+                  </p>
+                </div>
+              </label>
+            </div>
           </div>
 
           {useAIScreener && (
@@ -212,7 +244,7 @@ Research Team"
           {!useAIScreener && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700">Custom Questions</span>
+                <span className="text-sm font-medium text-gray-700">Basic Custom Questions</span>
                 <button
                   onClick={addScreenerQuestion}
                   className="btn-secondary text-sm flex items-center space-x-1"
@@ -258,8 +290,11 @@ Research Team"
               ))}
 
               {screenerQuestions.length === 0 && (
-                <div className="text-center py-6 text-gray-500">
-                  <p>No screener questions added yet. Click "Add Question" to get started.</p>
+                <div className="text-center py-6 text-gray-500 border border-gray-200 rounded-lg bg-gray-50">
+                  <p className="text-sm">No screener questions added yet.</p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Use "Create Advanced Screener" above for more options or add basic questions here.
+                  </p>
                 </div>
               )}
             </div>

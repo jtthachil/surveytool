@@ -1,11 +1,45 @@
 export type StudyType = 'online-survey' | '1-on-1-consultation' | 'product-testing';
 
-export type StudyStatus = 'draft' | 'pending-review' | 'approved' | 'live' | 'completed' | 'rejected';
+export type StudyStatus = 'draft' | 'pending-review' | 'approved' | 'live' | 'paused' | 'completed' | 'rejected';
+
+export type PaymentStatus = 'pending' | 'approved' | 'rejected' | 'held' | 'paid';
+
+export type TransactionType = 'survey_completion' | 'bonus_payment' | 'refund' | 'adjustment';
+
+export interface PaymentTransaction {
+  id: string;
+  participantId: string;
+  studyId: string;
+  customerId: string;
+  amount: number;
+  status: PaymentStatus;
+  type: TransactionType;
+  createdAt: Date;
+  reviewedAt?: Date;
+  paidAt?: Date;
+  reviewedBy?: string;
+  reviewNotes?: string;
+  surveyCompletedAt: Date;
+  studyTitle: string;
+  participantName: string;
+  participantEmail: string;
+}
+
+export interface ParticipantWallet {
+  participantId: string;
+  totalEarnings: number;
+  pendingPayments: number;
+  paidAmount: number;
+  heldAmount: number;
+  transactions: PaymentTransaction[];
+  lastPaymentDate?: Date;
+}
 
 export interface Participant {
   id: string;
   name: string;
   email: string;
+  customerId?: string; // Unique customer ID for tracking
   demographics: {
     age?: number;
     gender?: string;
@@ -18,6 +52,7 @@ export interface Participant {
   previousStudies: number;
   rating: number;
   availability: 'high' | 'medium' | 'low';
+  wallet?: ParticipantWallet;
 }
 
 export interface FilterCriteria {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, BarChart3, Users, Clock, CheckCircle, AlertCircle, Play, Eye, Calendar, DollarSign, Mail, Download, Edit, Plus, X, UserPlus, FileText, Video } from 'lucide-react';
 import type { Study } from '../types/study';
+import { SurveyManagement } from './SurveyManagement';
 
 interface StudyDetailProps {
   studies: Study[];
@@ -703,6 +704,15 @@ export const StudyDetail: React.FC<StudyDetailProps> = ({ studies }) => {
                         <FileText size={14} className="mr-1" />
                         Meeting Notes
                       </button>
+                      {study.status === 'completed' && (
+                        <button
+                          onClick={() => navigate('/payment-management')}
+                          className="flex items-center text-sm bg-purple-50 hover:bg-purple-100 text-purple-600 px-3 py-2 rounded-lg transition-colors duration-200"
+                        >
+                          <DollarSign size={14} className="mr-1" />
+                          Payment Review
+                        </button>
+                      )}
                     </div>
                     
                     {/* Show existing sessions and notes if any */}
@@ -806,6 +816,26 @@ export const StudyDetail: React.FC<StudyDetailProps> = ({ studies }) => {
               )}
             </div>
           </div>
+
+          {/* Survey Management */}
+          {(study.status === 'live' || study.status === 'pending-review' || study.status === 'paused') && (
+            <div className="card">
+              <h3 className="font-semibold text-gray-900 mb-4">Survey Management</h3>
+              <SurveyManagement
+                studyId={study.id}
+                currentStatus={study.status === 'pending-review' ? 'pending' : study.status as 'live' | 'pending' | 'paused' | 'completed' | 'draft'}
+                totalInvites={study.participants.length}
+                completed={0}
+                pending={study.participants.length}
+                failed={0}
+                optedOut={0}
+                onStatusChange={(newStatus) => {
+                  // Here you would update the study status in your state management
+                  console.log('Status changed to:', newStatus);
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
 

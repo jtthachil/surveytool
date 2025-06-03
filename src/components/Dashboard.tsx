@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, BarChart3, Users, Clock, CheckCircle, AlertCircle, Play, Eye } from 'lucide-react';
+import { Plus, BarChart3, Users, Clock, CheckCircle, AlertCircle, TrendingUp, DollarSign, Wallet, CreditCard, Play, Eye } from 'lucide-react';
 import type { Study, StudyType } from '../types/study';
 
 interface DashboardProps {
@@ -123,82 +123,155 @@ export const Dashboard: React.FC<DashboardProps> = ({ studies }) => {
         </div>
       </div>
 
-      {/* Recent Studies */}
-      <div className="card">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="section-header mb-0">Recent Studies</h2>
-          <button 
-            onClick={() => navigate('/studies')}
-            className="text-blue-600 hover:text-blue-700 font-semibold text-sm transition-colors"
-          >
-            View All
-          </button>
-        </div>
-
-        {studies.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <BarChart3 className="text-gray-400" size={40} />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No studies yet</h3>
-            <p className="text-gray-600 mb-8 max-w-md mx-auto">
-              Get started by creating your first research study. Choose from surveys, interviews, or product testing.
-            </p>
-            <button
-              onClick={() => navigate('/create-study')}
-              className="btn-primary"
-            >
-              Create Your First Study
-            </button>
+      {/* Quick Actions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <button
+          onClick={() => navigate('/create-study')}
+          className="group p-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl text-white hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <Plus className="h-8 w-8" />
+            <span className="text-blue-100 text-sm">Start Now</span>
           </div>
-        ) : (
-          <div className="space-y-4">
-            {studies.slice(0, 5).map((study) => (
-              <div 
-                key={study.id} 
-                onClick={() => navigate(`/study/${study.id}`)}
-                className="flex items-center justify-between p-4 border border-gray-100 rounded-lg hover:bg-gray-50 transition-all duration-200 group cursor-pointer"
+          <h3 className="text-lg font-semibold mb-2">Create New Study</h3>
+          <p className="text-blue-100 text-sm">Launch a new research study with participants</p>
+        </button>
+
+        <button
+          onClick={() => navigate('/analytics')}
+          className="group p-6 bg-gradient-to-br from-green-500 to-green-600 rounded-xl text-white hover:from-green-600 hover:to-green-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <BarChart3 className="h-8 w-8" />
+            <span className="text-green-100 text-sm">View All</span>
+          </div>
+          <h3 className="text-lg font-semibold mb-2">Analytics Hub</h3>
+          <p className="text-green-100 text-sm">Deep dive into your research data and insights</p>
+        </button>
+
+        <button
+          onClick={() => navigate('/wallet-dashboard')}
+          className="group p-6 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl text-white hover:from-purple-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <Wallet className="h-8 w-8" />
+            <span className="text-purple-100 text-sm">Manage</span>
+          </div>
+          <h3 className="text-lg font-semibold mb-2">Payment Center</h3>
+          <p className="text-purple-100 text-sm">Review participant payments and wallets</p>
+        </button>
+
+        <button
+          onClick={() => navigate('/participants')}
+          className="group p-6 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl text-white hover:from-orange-600 hover:to-orange-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <Users className="h-8 w-8" />
+            <span className="text-orange-100 text-sm">Browse</span>
+          </div>
+          <h3 className="text-lg font-semibold mb-2">Participant Pool</h3>
+          <p className="text-orange-100 text-sm">Discover and manage research participants</p>
+        </button>
+      </div>
+
+      {/* Recent Activity & Quick Stats */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="lg:col-span-2">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Studies</h2>
+          {studies.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <BarChart3 className="text-gray-400" size={40} />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No studies yet</h3>
+              <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                Get started by creating your first research study. Choose from surveys, interviews, or product testing.
+              </p>
+              <button
+                onClick={() => navigate('/create-study')}
+                className="btn-primary"
               >
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
-                    {study.type === 'online-survey' && <BarChart3 className="text-blue-600" size={24} />}
-                    {study.type === '1-on-1-consultation' && <Users className="text-blue-600" size={24} />}
-                    {study.type === 'product-testing' && <Eye className="text-blue-600" size={24} />}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                      {study.title || 'Untitled Study'}
-                    </h3>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
-                      <span className="capitalize">
-                        {study.type.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                      </span>
-                      <span>•</span>
-                      <span>{study.participants.length} participants</span>
-                      <span>•</span>
-                      <span>Created {study.createdAt.toLocaleDateString()}</span>
+                Create Your First Study
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {studies.slice(0, 5).map((study) => (
+                <div 
+                  key={study.id} 
+                  onClick={() => navigate(`/study/${study.id}`)}
+                  className="flex items-center justify-between p-4 border border-gray-100 rounded-lg hover:bg-gray-50 transition-all duration-200 group cursor-pointer"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                      {study.type === 'online-survey' && <BarChart3 className="text-blue-600" size={24} />}
+                      {study.type === '1-on-1-consultation' && <Users className="text-blue-600" size={24} />}
+                      {study.type === 'product-testing' && <Eye className="text-blue-600" size={24} />}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        {study.title || 'Untitled Study'}
+                      </h3>
+                      <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
+                        <span className="capitalize">
+                          {study.type.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        </span>
+                        <span>•</span>
+                        <span>{study.participants.length} participants</span>
+                        <span>•</span>
+                        <span>Created {study.createdAt.toLocaleDateString()}</span>
+                      </div>
                     </div>
                   </div>
+                  <div className="flex items-center space-x-3">
+                    <span className={`status-badge ${getStatusColor(study.status)}`}>
+                      {getStatusIcon(study.status)}
+                      <span className="ml-1 capitalize">{study.status.replace('-', ' ')}</span>
+                    </span>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/study/${study.id}`);
+                      }}
+                      className="p-2 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
+                    >
+                      <Eye size={16} />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <span className={`status-badge ${getStatusColor(study.status)}`}>
-                    {getStatusIcon(study.status)}
-                    <span className="ml-1 capitalize">{study.status.replace('-', ' ')}</span>
-                  </span>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/study/${study.id}`);
-                    }}
-                    className="p-2 text-gray-400 hover:text-gray-600 transition-colors rounded-lg hover:bg-gray-100"
-                  >
-                    <Eye size={16} />
-                  </button>
-                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        
+        <div className="space-y-4">
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-semibold text-gray-900">Payment Overview</h3>
+              <CreditCard className="h-5 w-5 text-gray-400" />
+            </div>
+            <div className="space-y-3">
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Pending Payments</span>
+                <span className="text-sm font-medium text-yellow-600">$125.00</span>
               </div>
-            ))}
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Paid This Month</span>
+                <span className="text-sm font-medium text-green-600">$850.00</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-sm text-gray-600">Total Participants</span>
+                <span className="text-sm font-medium text-gray-900">24</span>
+              </div>
+            </div>
+            <button
+              onClick={() => navigate('/payment-management')}
+              className="w-full mt-4 text-sm text-blue-600 hover:text-blue-700 font-medium"
+            >
+              Review Payments →
+            </button>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Quick Actions */}

@@ -30,7 +30,9 @@ export const StudyReview: React.FC<StudyReviewProps> = ({ study, onSubmit }) => 
     };
     
     onSubmit(finalStudy);
-    navigate('/');
+    
+    // Navigate to success page with study data
+    navigate('/study-submitted', { state: { study: finalStudy } });
     setIsSubmitting(false);
   };
 
@@ -238,76 +240,60 @@ export const StudyReview: React.FC<StudyReviewProps> = ({ study, onSubmit }) => 
         </div>
       </div>
 
-      {/* Study Configuration */}
-      {study.configuration && (
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Study Configuration</h3>
-          <div className="space-y-6">
-            {/* Custom Message */}
-            <div>
-              <div className="flex items-center space-x-2 mb-2">
-                <MessageSquare size={16} className="text-blue-600" />
-                <h4 className="text-sm font-medium text-gray-700">Custom Message</h4>
-              </div>
-              {study.configuration.customMessage ? (
-                <div className="bg-gray-50 rounded-lg p-3">
-                  <p className="text-sm text-gray-700 whitespace-pre-wrap">
-                    {study.configuration.customMessage}
-                  </p>
-                </div>
-              ) : (
-                <p className="text-sm text-gray-500">No custom message configured</p>
-              )}
-            </div>
-
-            {/* Screener */}
-            <div>
-              <div className="flex items-center space-x-2 mb-2">
-                <Brain size={16} className="text-purple-600" />
-                <h4 className="text-sm font-medium text-gray-700">Screener</h4>
-              </div>
-              {study.configuration.screener ? (
-                <p className="text-sm text-green-600">
-                  {study.configuration.screener.isAIGenerated 
-                    ? 'AI-generated screener questions' 
-                    : `${study.configuration.screener.questions.length} custom questions`
-                  }
-                </p>
-              ) : (
-                <p className="text-sm text-gray-500">No screener configured</p>
-              )}
-            </div>
-
-            {/* Exit Links */}
-            <div>
-              <div className="flex items-center space-x-2 mb-2">
-                <Link size={16} className="text-orange-600" />
-                <h4 className="text-sm font-medium text-gray-700">Exit Links</h4>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                <div>
-                  <span className="text-gray-500">Complete:</span>
-                  <p className="font-mono text-gray-700 truncate">
-                    {study.configuration.exitLinks.complete || 'Not set'}
-                  </p>
-                </div>
-                <div>
-                  <span className="text-gray-500">Terminate:</span>
-                  <p className="font-mono text-gray-700 truncate">
-                    {study.configuration.exitLinks.terminate || 'Not set'}
-                  </p>
-                </div>
-                <div>
-                  <span className="text-gray-500">Quota Full:</span>
-                  <p className="font-mono text-gray-700 truncate">
-                    {study.configuration.exitLinks.quotaFull || 'Not set'}
-                  </p>
-                </div>
-              </div>
-            </div>
+      {/* Configuration */}
+      <div className="card">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Study Configuration</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <h4 className="font-medium text-gray-900 mb-2">Respondents</h4>
+            <p className="text-2xl font-bold text-blue-600">{study.configuration?.totalRespondents || 0}</p>
+            <p className="text-sm text-gray-500">Target participants</p>
+          </div>
+          <div>
+            <h4 className="font-medium text-gray-900 mb-2">Duration</h4>
+            <p className="text-2xl font-bold text-green-600">{study.configuration?.surveyLength || 0} min</p>
+            <p className="text-sm text-gray-500">Estimated time</p>
+          </div>
+          <div>
+            <h4 className="font-medium text-gray-900 mb-2">Compensation</h4>
+            <p className="text-2xl font-bold text-purple-600">${study.configuration?.compensation || 0}</p>
+            <p className="text-sm text-gray-500">Per participant</p>
           </div>
         </div>
-      )}
+
+        {study.configuration?.screener && (
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <h4 className="font-medium text-gray-900 mb-3">Screener Configuration</h4>
+            <div className="flex items-center space-x-2 mb-2">
+              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                study.configuration.screener.isAIGenerated 
+                  ? 'bg-purple-100 text-purple-800' 
+                  : 'bg-blue-100 text-blue-800'
+              }`}>
+                {study.configuration.screener.isAIGenerated ? 'AI Generated' : 'Custom Questions'}
+              </span>
+              <span className="text-sm text-gray-500">
+                {study.configuration.screener.questions.length} question(s)
+              </span>
+            </div>
+            <button
+              onClick={() => navigate('/screener-creator')}
+              className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+            >
+              Edit Screener →
+            </button>
+          </div>
+        )}
+
+        {study.configuration?.customMessage && (
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <h4 className="font-medium text-gray-900 mb-2">Custom Message</h4>
+            <div className="bg-gray-50 rounded-lg p-4">
+              <p className="text-sm text-gray-700">{study.configuration.customMessage}</p>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Submission Notice */}
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
