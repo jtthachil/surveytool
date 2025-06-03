@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { CheckCircle, Clock, Users, DollarSign, Calendar, Eye, BarChart3, ArrowRight, Copy, ExternalLink, RefreshCw } from 'lucide-react';
+import { CheckCircle, Clock, Users, DollarSign, Eye, BarChart3, ArrowRight, Copy, RefreshCw } from 'lucide-react';
 import type { Study } from '../types/study';
 
 interface StudySubmittedProps {
@@ -71,7 +71,6 @@ export const StudySubmitted: React.FC<StudySubmittedProps> = ({ study: propStudy
     : 0;
 
   const isLive = study.status === 'live';
-  const isPending = study.status === 'pending-review';
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 relative">

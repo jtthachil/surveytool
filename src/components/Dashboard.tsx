@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, BarChart3, Users, Clock, CheckCircle, AlertCircle, TrendingUp, DollarSign, Wallet, CreditCard, Play, Eye } from 'lucide-react';
+import { Plus, BarChart3, Users, Clock, CheckCircle, AlertCircle, Wallet, CreditCard, Play, Eye } from 'lucide-react';
 import type { Study, StudyType } from '../types/study';
 
 interface DashboardProps {

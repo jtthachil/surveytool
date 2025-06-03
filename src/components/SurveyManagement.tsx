@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { Pause, Square, Play, CheckCircle, AlertTriangle, Users, Clock, BarChart3 } from 'lucide-react';
+import { Pause, Square, Play, CheckCircle, AlertTriangle } from 'lucide-react';
 
 interface SurveyManagementProps {
-  studyId: string;
-  currentStatus: 'live' | 'pending' | 'paused' | 'completed' | 'draft';
+  currentStatus: 'draft' | 'live' | 'paused' | 'ended';
   totalInvites: number;
   completed: number;
   pending: number;
   failed: number;
   optedOut: number;
-  onStatusChange: (newStatus: string) => void;
+  onStatusChange: (newStatus: 'live' | 'paused' | 'ended') => void;
 }
 
 export const SurveyManagement: React.FC<SurveyManagementProps> = ({
-  studyId,
   currentStatus,
   totalInvites,
   completed,
@@ -35,7 +33,7 @@ export const SurveyManagement: React.FC<SurveyManagementProps> = ({
   };
 
   const handleEndSurvey = () => {
-    onStatusChange('completed');
+    onStatusChange('ended');
     setShowEndModal(false);
     setEndReason('');
   };
@@ -66,7 +64,7 @@ export const SurveyManagement: React.FC<SurveyManagementProps> = ({
       live: { color: 'bg-green-100 text-green-800', label: 'Live' },
       pending: { color: 'bg-yellow-100 text-yellow-800', label: 'Under Review' },
       paused: { color: 'bg-orange-100 text-orange-800', label: 'Paused' },
-      completed: { color: 'bg-gray-100 text-gray-800', label: 'Completed' },
+      ended: { color: 'bg-gray-100 text-gray-800', label: 'Completed' },
       draft: { color: 'bg-gray-100 text-gray-800', label: 'Draft' }
     };
 
@@ -77,6 +75,14 @@ export const SurveyManagement: React.FC<SurveyManagementProps> = ({
         {config.label}
       </span>
     );
+  };
+
+  const statusColors = {
+    live: { color: 'bg-green-100 text-green-800', label: 'Live' },
+    pending: { color: 'bg-yellow-100 text-yellow-800', label: 'Under Review' },
+    paused: { color: 'bg-orange-100 text-orange-800', label: 'Paused' },
+    ended: { color: 'bg-gray-100 text-gray-800', label: 'Completed' },
+    draft: { color: 'bg-gray-100 text-gray-800', label: 'Draft' }
   };
 
   return (

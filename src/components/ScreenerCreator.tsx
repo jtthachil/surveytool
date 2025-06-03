@@ -11,15 +11,13 @@ interface ScreenerQuestion {
 }
 
 interface ScreenerCreatorProps {
+  onBack?: () => void;
   onSave?: (screenerData: any) => void;
-  onCancel?: () => void;
-  initialData?: any;
 }
 
 export const ScreenerCreator: React.FC<ScreenerCreatorProps> = ({
-  onSave,
-  onCancel,
-  initialData
+  onBack,
+  onSave
 }) => {
   const navigate = useNavigate();
   const [screenerTitle] = useState('Create a screener');
@@ -109,8 +107,8 @@ export const ScreenerCreator: React.FC<ScreenerCreatorProps> = ({
   };
 
   const handleCancel = () => {
-    if (onCancel) {
-      onCancel();
+    if (onBack) {
+      onBack();
     } else {
       navigate(-1);
     }

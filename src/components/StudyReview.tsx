@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, CheckCircle, AlertTriangle, Users, MessageSquare, Brain, Link, DollarSign, Clock, Star } from 'lucide-react';
+import { ArrowLeft, CheckCircle, AlertTriangle, Users, DollarSign, Clock, Star } from 'lucide-react';
 import type { Study } from '../types/study';
 
 interface StudyReviewProps {

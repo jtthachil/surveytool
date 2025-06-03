@@ -5,9 +5,7 @@ import {
   DollarSign, 
   TrendingUp, 
   Users, 
-  Calendar, 
   Search, 
-  Filter, 
   Download, 
   ArrowUpRight, 
   ArrowDownRight,
@@ -19,24 +17,18 @@ import {
   CreditCard,
   BarChart3,
   RefreshCw,
-  Plus,
-  ExternalLink,
   FileText,
-  Mail,
-  User,
   Copy,
   X
 } from 'lucide-react';
-import type { ParticipantWallet, PaymentStatus, PaymentTransaction } from '../types/study';
+import type { ParticipantWallet, PaymentStatus } from '../types/study';
 
 interface WalletDashboardProps {
   participantWallets: ParticipantWallet[];
-  onExportTransactions: () => void;
 }
 
 export const WalletDashboard: React.FC<WalletDashboardProps> = ({
-  participantWallets,
-  onExportTransactions
+  participantWallets
 }) => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
@@ -44,7 +36,6 @@ export const WalletDashboard: React.FC<WalletDashboardProps> = ({
   const [dateRange, setDateRange] = useState<'7d' | '30d' | '90d' | 'all'>('30d');
   const [sortBy, setSortBy] = useState<'date' | 'amount' | 'participant'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [selectedWallet, setSelectedWallet] = useState<string | null>(null);
   const [showExportModal, setShowExportModal] = useState(false);
 
   // Calculate overall statistics
@@ -247,13 +238,6 @@ export const WalletDashboard: React.FC<WalletDashboardProps> = ({
           >
             <Download size={16} />
             <span>Export</span>
-          </button>
-          <button
-            onClick={() => navigate('/payment-management')}
-            className="btn-primary flex items-center space-x-2"
-          >
-            <CreditCard size={16} />
-            <span>Payment Management</span>
           </button>
         </div>
       </div>

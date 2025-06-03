@@ -822,15 +822,17 @@ export const StudyDetail: React.FC<StudyDetailProps> = ({ studies }) => {
             <div className="card">
               <h3 className="font-semibold text-gray-900 mb-4">Survey Management</h3>
               <SurveyManagement
-                studyId={study.id}
-                currentStatus={study.status === 'pending-review' ? 'pending' : study.status as 'live' | 'pending' | 'paused' | 'completed' | 'draft'}
+                currentStatus={
+                  study.status === 'pending-review' ? 'draft' : 
+                  study.status === 'completed' ? 'ended' : 
+                  study.status as 'draft' | 'live' | 'paused' | 'ended'
+                }
                 totalInvites={study.participants.length}
                 completed={0}
                 pending={study.participants.length}
                 failed={0}
                 optedOut={0}
                 onStatusChange={(newStatus) => {
-                  // Here you would update the study status in your state management
                   console.log('Status changed to:', newStatus);
                 }}
               />

@@ -1,110 +1,84 @@
 import React from 'react';
-import { Calendar, Clock, DollarSign, Users, CheckCircle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 
 interface EmailNotificationProps {
-  recipientName: string;
-  studyTitle: string;
-  studyType: string;
-  payout: number;
-  dueDate: string;
-  studyLength: number;
-  eligibilityCriteria: string[];
-  onTakeStudy?: () => void;
-  onClose?: () => void;
+  notifications: Array<{
+    id: string;
+    studyTitle: string;
+    participantCount: number;
+    eligibilityCriteria: string[];
+    requestedDate: Date;
+    priority: 'high' | 'medium' | 'low';
+    payout?: number;
+    studyLength?: number;
+  }>;
 }
 
 export const EmailNotification: React.FC<EmailNotificationProps> = ({
-  recipientName,
-  studyTitle,
-  studyType,
-  payout,
-  dueDate,
-  studyLength,
-  eligibilityCriteria,
-  onTakeStudy,
-  onClose
+  notifications
 }) => {
+  const notification = notifications[0]; // Use first notification for display
+  
   return (
     <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg border border-gray-200">
-      {/* Header */}
-      <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center mb-4">
-          <div className="flex items-center">
-            <div className="w-8 h-8 bg-black text-white rounded flex items-center justify-center text-sm font-bold mr-3">
-              CX
-            </div>
-            <span className="text-lg font-semibold text-gray-900">CleverX</span>
-          </div>
-        </div>
-        
-        <div className="mb-4">
-          <p className="text-gray-700 mb-2">Hi {recipientName},</p>
+      <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white p-6 rounded-t-lg">
+        <h2 className="text-xl font-bold">🎉 Congratulations!</h2>
+        <p className="text-pink-100 mt-1">You have a new screener request</p>
+      </div>
+      
+      <div className="p-6">
+        <div className="mb-6">
+          <p className="text-gray-700 mb-2">Hi there,</p>
           <p className="text-gray-700">
             Congratulations! You've got a new screener request for a study from{' '}
-            <strong>Vaishali Srivastava.</strong>
+            <span className="font-semibold text-gray-900">AkquaintX team</span>.
           </p>
         </div>
-      </div>
 
-      {/* Study Details */}
-      <div className="p-6 bg-gray-50">
-        <div className="grid grid-cols-2 gap-6">
-          <div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-600 mb-1">Study type</label>
-              <p className="text-gray-900">{studyType}</p>
-            </div>
-            
+        <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <h3 className="font-semibold text-gray-900 mb-4">Study Details</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-600 mb-1">Study title</label>
-              <p className="text-gray-900 font-medium">{studyTitle}</p>
+              <p className="text-gray-900 font-medium">{notification.studyTitle}</p>
             </div>
             
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-600 mb-1">Payout</label>
-              <p className="text-gray-900 font-semibold">${payout}</p>
+              <p className="text-gray-900 font-semibold">${notification.payout || 50}</p>
             </div>
-          </div>
-          
-          <div>
+            
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-600 mb-1">Due date</label>
-              <p className="text-gray-900">{dueDate}</p>
+              <p className="text-gray-900">{notification.requestedDate.toDateString()}</p>
             </div>
             
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-600 mb-1">Study length</label>
-              <p className="text-gray-900">{studyLength} min</p>
+              <p className="text-gray-900">{notification.studyLength || 15} min</p>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Eligibility Section */}
-      <div className="p-6">
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600 mb-3">Eligibility</label>
-          <p className="text-gray-700 mb-4">
-            The professional taking the survey must meet either the following criteria:
-          </p>
+        <div className="mb-6">
+          <h4 className="font-semibold text-gray-900 mb-3">Eligibility Criteria</h4>
           
           <div className="space-y-2">
-            {eligibilityCriteria.map((criteria, index) => (
+            {notification.eligibilityCriteria.map((criteria, index) => (
               <div key={index} className="flex items-start">
                 <span className="text-gray-600 mr-2 mt-1">{index + 1}.</span>
-                <p className="text-gray-700">{criteria}</p>
+                <span className="text-gray-700">{criteria}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Action Button */}
         <div className="pt-4 border-t border-gray-200">
           <button
-            onClick={onTakeStudy}
             className="w-full bg-pink-600 text-white px-6 py-3 rounded-md font-medium hover:bg-pink-700 transition-colors"
           >
-            Take study
+            Take the Screener 🚀
           </button>
         </div>
       </div>
@@ -112,13 +86,12 @@ export const EmailNotification: React.FC<EmailNotificationProps> = ({
   );
 };
 
-// Email Preview Component for showing in the system
-export const EmailPreview: React.FC<{
-  study: any;
-  participant: any;
+// Email notification wrapper for study detail display
+export const EmailNotificationModal: React.FC<{
+  study?: any;
   onSend?: () => void;
   onClose?: () => void;
-}> = ({ study, participant, onSend, onClose }) => {
+}> = ({ study, onSend, onClose }) => {
   const eligibilityCriteria = [
     'Job role: Advertising/Marketing.',
     'Company Type: Agency/ Marketer (Business/ Brand)',
@@ -146,13 +119,18 @@ export const EmailPreview: React.FC<{
         
         <div className="p-6">
           <EmailNotification
-            recipientName={participant?.name || 'Mark'}
-            studyTitle={study?.title || 'US Marketing and Advertising Media Strategy'}
-            studyType={study?.type || 'Online Survey'}
-            payout={study?.configuration?.compensation || 50}
-            dueDate="April 3rd, 4:56 AM EDT"
-            studyLength={study?.configuration?.surveyLength || 15}
-            eligibilityCriteria={eligibilityCriteria}
+            notifications={[
+              {
+                id: '1',
+                studyTitle: study?.title || 'US Marketing and Advertising Media Strategy',
+                participantCount: 0,
+                eligibilityCriteria: eligibilityCriteria,
+                requestedDate: new Date(),
+                priority: 'high',
+                payout: 50,
+                studyLength: 15
+              }
+            ]}
           />
         </div>
         

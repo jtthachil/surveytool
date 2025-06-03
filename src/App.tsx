@@ -619,7 +619,6 @@ function App() {
               path="/survey-management/:id" 
               element={
                 <SurveyManagement 
-                  studyId="study_1"
                   currentStatus="live"
                   totalInvites={20}
                   completed={0}
@@ -647,10 +646,6 @@ function App() {
               element={
                 <WalletDashboard 
                   participantWallets={participantWallets}
-                  onExportTransactions={() => {
-                    console.log('Exporting transactions...');
-                    // Export functionality would go here
-                  }}
                 />
               } 
             />

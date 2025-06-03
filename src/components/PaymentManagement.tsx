@@ -4,21 +4,15 @@ import {
   XCircle, 
   Clock, 
   DollarSign, 
-  User, 
-  Calendar, 
   MessageSquare, 
   Download, 
-  Filter, 
   Search,
   Eye,
   Edit,
-  Mail,
   AlertTriangle,
   Pause,
   ArrowLeft,
   BarChart3,
-  FileText,
-  RefreshCw,
   X,
   Copy,
   ChevronDown,
@@ -30,8 +24,6 @@ import { useNavigate } from 'react-router-dom';
 import type { PaymentTransaction, PaymentStatus } from '../types/study';
 
 interface PaymentManagementProps {
-  studyId?: string;
-  studyTitle?: string;
   transactions: PaymentTransaction[];
   onUpdatePayment: (transactionId: string, status: PaymentStatus, notes?: string) => void;
   onBulkUpdate: (transactionIds: string[], status: PaymentStatus, notes?: string) => void;
@@ -51,8 +43,6 @@ interface GroupedTransactions {
 }
 
 export const PaymentManagement: React.FC<PaymentManagementProps> = ({
-  studyId,
-  studyTitle,
   transactions,
   onUpdatePayment,
   onBulkUpdate

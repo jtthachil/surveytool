@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { Search, Bell, User, Plus, CheckCircle, Clock, AlertCircle, BarChart3, Users, FileText, Settings, Wallet } from 'lucide-react';
+import { Search, Bell, User, Plus, CheckCircle, Clock, AlertCircle, BarChart3, Users, FileText, Wallet } from 'lucide-react';
 
 const mockNotifications = [
   {
